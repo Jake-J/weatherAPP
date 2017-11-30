@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        table {
+            border-spacing: 0;
+            margin-top:50px;
+        }
+        table caption {
+            margin:20px;
+            font-size: 1.6em;
+        }
+        thead th{
+            position: relative;
+        }
+        th .arrow{
+            position:absolute;
+            top:-6px;
+            font-size:1.5em;
+        }
+        th .arrow:hover{
+            cursor:pointer;
+        }
+        th .leftArr{
+            left:0;
+        }
+        th .rightArr {
+            right:0;
+        }
+        tbody td{
+            padding:5px 15px;
+            text-align: center;
+        }
+         tbody td:first-child{
+            border-right:1px solid gainsboro;
+        }
+        td.hiddenCell{
+            visibility: hidden;
+        }
+        .tableBox{
+            overflow: auto;
+        }
+        tr > td:first-child{
+            text-align: left;
+            font-weight: 600;
+        }
+        tr.spaceTop{
+            padding-top:50px !important;
+        }
+    </style>
+</head>
+<body>
+    <center>
+            <h1>Making fixed headers to a table</h1>
+            <hr/>
+            
+        <div class="tableBox">
+            <table>
+                <caption>Warsaw , PL</caption>
+                <thead>
+                    <tr>
+                    <td class="hidden"></td>
+                    <th colspan="7"><span class="leftArr arrow">&larr;</span> <span id="day">Monday</span><span class="rightArr arrow" >&rarr;</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>hour</td>
+                        <td>0:00</td>
+                        <td>4:00</td>
+                        <td>8:00</td>
+                        <td>12:00</td>
+                        <td>16:00</td>
+                        <td>20:00</td>
+                        <td>00:00</td>
+                    </tr>
+                    <tr>
+                        <td>temp</td>
+                        <td>2C</td>
+                        <td>1C</td>
+                        <td>5C</td>
+                        <td>3C</td>
+                        <td>4C</td>
+                        <td>6C</td>
+                        <td>2C</td>
+                    </tr>
+                    <tr>
+                        <td>humidity</td>
+                        <td>50%</td>
+                        <td>55%</td>
+                        <td>63%</td>
+                        <td>52%</td>
+                        <td>58%</td>
+                        <td>65%</td>
+                        <td>80%</td>
+                    </tr>
+                    <tr rowspan="2">
+                            <td class="vCenter">conditions</td>
+                            <td>clear</td>
+                            <td>cloudy</td>
+                            <td>fog</td>
+                            <td>hazy</td>
+                            <td>cloudy</td>
+                            <td>snow</td>
+                            <td>night</td>
+                        </tr>
+                        <tr>
+                            <td></td>
+                            <td><img src="http://icons-ak.wxug.com/i/c/k/clear.gif" alt="weather Icon"/></td>
+                            <td><img src="https://icons.wxug.com/i/c/k/partlycloudy.gif" alt="weather Icon"></td>
+                            <td><img src="https://icons.wxug.com/i/c/k/fog.gif" alt="weather Icon"></td>
+                            <td><img src="https://icons.wxug.com/i/c/k/hazy.gif" alt="weather Icon"></td>
+                            <td><img src="https://icons.wxug.com/i/c/k/cloudy.gif" alt="weather Icon"></td>
+                            <td><img src="https://icons.wxug.com/i/c/k/snow.gif" alt="weather Icon"></td>
+                            <td><img src="https://icons.wxug.com/i/c/k/nt_clear.gif" alt="weather Icon"></td>
+                        </tr>
+                    <tr>
+                        <td>wind speed</td>
+                        <td>3m/s</td>
+                        <td>2m/s</td>
+                        <td>4m/s</td>
+                        <td>5m/s</td>
+                        <td>1m/s</td>
+                        <td>0m/s</td>
+                        <td>2m/s</td>
+                    </tr> 
+                    <tr>
+                        <td>wind direction</td>
+                        <td>west</td>
+                        <td>west</td>
+                        <td>north west</td>
+                        <td>south west</td>
+                        <td>south</td>
+                        <td>south-east</td>
+                        <td>north-east</td>
+                    </tr>
+                </tbody>
+                
+            </table>
+        </div>
+    </center>
+    <script>
+        (function(){
+            var dayCellText = document.getElementById("day"),
+                leftArrow = document.getElementsByClassName('leftArr')[0];
+                rightArrow = document.getElementsByClassName('rightArr')[0],
+                daysOfWeek = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+                
+                
+
+            function changeDay(direction) {
+                var currentIndex = daysOfWeek.indexOf(dayCellText.innerHTML);
+                return function() {
+                    if(direction === 'back'){
+                        if(currentIndex == 0){ 
+                            console.log(currentIndex)
+                            dayCellText.innerHTML = daysOfWeek[daysOfWeek.length-1]
+                            currentIndex = daysOfWeek.indexOf(dayCellText.innerHTML);
+                        }else{
+                            dayCellText.innerHTML = daysOfWeek[currentIndex-1];
+                            currentIndex = daysOfWeek.indexOf(dayCellText.innerHTML);
+                        }
+                    }else if(direction === 'forward'){
+                        if(currentIndex === daysOfWeek.length-1){ 
+                            dayCellText.innerHTML = daysOfWeek[0]
+                            currentIndex = daysOfWeek.indexOf(dayCellText.innerHTML);
+                        }else{
+                            dayCellText.innerHTML = daysOfWeek[currentIndex+1];
+                            currentIndex = daysOfWeek.indexOf(dayCellText.innerHTML);
+                        }
+                    }
+                }
+            }
+            leftArrow.addEventListener('click',changeDay('back'));
+            rightArrow.addEventListener('click',changeDay('forward'));
+            
+        })();
+    </script>
+</body>
+</html>

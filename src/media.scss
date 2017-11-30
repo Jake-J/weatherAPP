@@ -1,0 +1,43 @@
+@media screen and (max-device-width: 960px){
+
+body{
+    background-image:none;
+    height:100%;
+    div.content{
+        width:100% !important;
+        padding:40px 0 0 0 !important;
+    }
+    div#root,div.wrapper{
+        height:100%;
+    }
+    div.content{
+        height:91%;
+        border-radius:none;
+    }
+
+}
+}
+@media screen and(max-device-width: 660px){
+    body{
+        width:100%;
+        overflow-x: hidden;
+        div#root, div.wrapper{
+            height: 100% !important;
+        }
+        
+        // div.content{
+        //     min-height: 79.5% !important;
+        // }
+    }
+    div.weatherData{
+        width:100%;
+        overflow-x:auto;
+    }
+    table{
+        tbody{
+            td{
+                padding:5px 3px !important;
+            }
+        }
+    }
+}

@@ -9,6 +9,9 @@ body{
     }
     div#root,div.wrapper{
         height:100%;
+        div.header{
+            width:100%;
+        }
     }
     div.content{
         height:91%;
@@ -25,19 +28,53 @@ body{
             height: 100% !important;
         }
         
-        // div.content{
-        //     min-height: 79.5% !important;
-        // }
     }
-    div.weatherData{
+}
+@media screen and(max-device-width: 600px){
+    div.weather-display{
         width:100%;
-        overflow-x:auto;
     }
-    table{
-        tbody{
-            td{
-                padding:5px 3px !important;
+}
+
+@media screen and(max-device-width: 440px){
+    div.weather-display{
+        width:100%;
+    }
+    div.current-weather{
+        border-radius: none;
+        padding-top:5px !important;
+        div.weather-box-top{
+            div.top-right-section{
+                flex-direction: column;
+                align-items: end !important;
+                justify-content: flex-start !important;
+                span.weather-date{
+                    margin-right:10px !important;
+                }
             }
+            
         }
+        div.weather-box-bottom{
+            flex-direction:column;
+            align-items: center !important;
+        }
+    }
+    img.weather-icon{
+        flex-basis: 40% !important;
+    }
+    div.top-right.section{
+        flex-basis:60% !important;
+    }
+    div.forecast-weather-box{
+        span.weather-day{
+            text-align: right;
+        }
+    }
+    .weatherForm,.inputBox,input{
+        width:100% !important;
+        box-sizing: border-box;
+    }
+    .weather-display{
+        margin-bottom:0 !important;
     }
 }

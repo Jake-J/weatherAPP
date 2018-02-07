@@ -9,7 +9,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import request from 'superagent';
 //components
-import {Forecast} from './components/Forecast';
+import {DisplayWeather} from './components/DisplayWeather';
 
 class WeatherApp extends React.Component{
   constructor(props){
@@ -36,7 +36,7 @@ class WeatherApp extends React.Component{
     if(localization === ''){
       this.setValidation('You need to enter localization');
     }else{
-      this.setMessage("http://api.openweathermap.org/data/2.5/forecast?q="+localization+"&APPID=5dad892c8856fc14494adee97228a48f");
+      this.setMessage("https://api.openweathermap.org/data/2.5/weather?q="+localization+"&APPID=f48d3cfe3b7c249a8641cf7a9ee34ada");
       this.textInput.value = '';
     }
     
@@ -50,7 +50,12 @@ class WeatherApp extends React.Component{
       navigator.geolocation.getCurrentPosition((position) =>{
         const long = position.coords.longitude,
               lat = position.coords.latitude;
-        this.setMessage('http://api.openweathermap.org/data/2.5/forecast?lat='+lat+'&lon='+long+"&APPID=5dad892c8856fc14494adee97228a48f");
+        this.setMessage('https://api.openweathermap.org/data/2.5/weather?lat='+lat+'&lon='+long+"&APPID=5dad892c8856fc14494adee97228a48f");
+      },(error)=>{
+        this.setState({
+          validationMessage:'You need to enable geolocation in your browser!',
+          isWaiting:false
+        })
       })
     }
   }
@@ -59,6 +64,7 @@ class WeatherApp extends React.Component{
     .get(url)
     .set('accept', 'json')
     .end((err, res) => {
+      console.log('request done');
       const weatherData = JSON.parse(res.text); 
       if(weatherData.cod == 200){
         this.setState({
@@ -91,7 +97,7 @@ class WeatherApp extends React.Component{
             <button onClick={this.getCoords}>Find me!</button> 
           </form>
           {!weatherInfo && isWaiting && <div className="loading"><img src={spinner} /></div>}
-          {weatherInfo && <Forecast forecastData={weatherInfo}/> }
+          {weatherInfo && <DisplayWeather currentWeatherData={weatherInfo}/> }
         </div>
 
       </div>
@@ -103,16 +109,3 @@ ReactDOM.render(
   <WeatherApp/>,
   document.getElementById('root')
 );
- 
-            // <ul>
-            //     <li><p>{weatherInfo.weather['0'].description}</p></li>
-            //     <li<img src={'http://openweathermap.org/img/w/'+weatherInfo.weather['0'].icon+'.png'} alt="weather icon" /></li>
-            //     <li>temp: <span>{weatherInfo.main.temp}</span></li>
-            //     <li>humidity:<span>{weatherInfo.main.humidity}</span></li>
-            //     <li>pressure:<span>{weatherInfo.main.pressure}</span></li>
-            //     <li>wind:<span>{weatherInfo.wind.speed}</span></li>
-                
-            //     {//dodac wind direction w postaci strzalki 
-            //     }
-            // </ul>
-           // ,item.weather['0'].icon
